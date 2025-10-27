@@ -1,0 +1,11 @@
+{
+  "domain": "mmpk",
+  "name": "mMPK",
+  "documentation": "https://tbd/",
+  "issue_tracker": "https://tbd/issues",
+  "codeowners": ["@mysiar"],
+  "requirements": ["requests", "urllib3"],
+  "version": "0.0.1",
+  "iot_class": "cloud_polling",
+  "logo": "logo.png"
+}

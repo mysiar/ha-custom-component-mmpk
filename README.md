@@ -16,8 +16,8 @@ sensor:
 
 ```
 
-* id: `1` sensor  will scrap data for all busses/tramway whatever is available on this stop.
-* id: `2` sensor will scrap data only for line 126 on this stop.
+* A sensor configured with id: `1` will retrieve data for all available buses and trams at the specified stop.
+* A sensor configured with id: `2` will retrieve data exclusively for line 126 at the specified stop.
 
 
 ## Stop list

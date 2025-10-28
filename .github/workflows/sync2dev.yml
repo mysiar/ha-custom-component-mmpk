@@ -1,0 +1,45 @@
+name: Sync and Reorganize to Dev
+
+on:
+  push:
+    branches:
+      - build
+
+jobs:
+  sync-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Needed to access both branches
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch all branches
+        run: git fetch origin
+
+      - name: Checkout dev branch
+        run: git checkout dev
+
+      - name: Merge build into dev (without auto-commit)
+        run: git merge origin/build --no-commit --no-ff
+
+      - name: Reorganize files
+        run: |
+
+          mkdir -p custom_components/mmpk
+          mv sensor.py custom_components/mmpk/
+          mv __init__.py custom_components/mmpk/
+          mv manifest.json custom_components/mmpk/
+          rm -f sensor.py.*
+          rm -f README_temp.md
+
+      - name: Commit and push changes
+        run: |
+          git add -A
+          git commit -m "Sync and reorganize from build branch" || echo "No changes to commit"
+          git push origin dev

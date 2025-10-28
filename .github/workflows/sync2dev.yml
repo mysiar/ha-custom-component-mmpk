@@ -18,7 +18,7 @@ jobs:
       - name: Configure Git
         run: |
           git config user.name "Piotr Synowiec(via GitHub Actions)"
-          git config user.email "psynowiec@duck.com"
+          git config user.email "PiotrSynowiec@users.noreply.github.com"
 
       - name: Fetch all branches
         run: git fetch origin
@@ -37,6 +37,7 @@ jobs:
           mv manifest.json custom_components/mmpk/
           rm -f sensor.py.*
           rm -f README_temp.md
+          rm -f stopscrap.py
 
       - name: Commit and force push changes
         run: |

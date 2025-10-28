@@ -1,4 +1,4 @@
-# v2 - added description
+# vX
 
 import logging
 import requests
@@ -8,8 +8,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
-
-INTERVAL_TIME = 15
+INTERVAL_TIME = 60
 SCAN_INTERVAL = timedelta(seconds=INTERVAL_TIME)
 _LOGGER = logging.getLogger(__name__)
 
@@ -25,7 +24,6 @@ def setup_platform(
     add_entities: AddEntitiesCallback,
     discovery_info: DiscoveryInfoType | None = None,
 ) -> None:
-    """Set up MMPK sensors from config."""
     sensors = []
     stops = config.get("stops", [])
     for stop in stops:
@@ -38,8 +36,6 @@ def setup_platform(
     add_entities(sensors, True)
 
 class MMPKSensor(SensorEntity):
-    """Sensor for MPK Kraków stop schedule."""
-
     def __init__(self, name: str, stop_id: int, lines: list[str] | None = None, description: str | None = None) -> None:
         self._stop_id = stop_id
         self._lines = lines
@@ -67,7 +63,6 @@ class MMPKSensor(SensorEntity):
         try:             
             now = datetime.now()
             next_departure_dt = datetime.combine(now.date(), datetime.strptime(self._attr_native_value, "%H:%M").time()) if self._attr_native_value else None
-
             _LOGGER.debug("Current time: %s, Next departure time: %s for stop %s", now, next_departure_dt, self._stop_id)
 
             if next_departure_dt is not None and now < next_departure_dt:
@@ -78,7 +73,6 @@ class MMPKSensor(SensorEntity):
             _LOGGER.warning("Failed to compare times for stop %s: %s", self._stop_id, e)
             self._attr_native_value = None
         
-        """Fetch and organize all departures per line and variant."""
         now = datetime.now().isoformat()
         _LOGGER.debug("MMPK update triggered at %s for stop %s", now, self._stop_id)
         url = f"https://services.mpk.amistad.pl/mpk/schedule/stop/{self._stop_id}"

@@ -1,0 +1,45 @@
+name: Sync and Reorganize to Dev
+
+on:
+  push:
+    branches:
+      - build
+
+jobs:
+  sync-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with PAT
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "Piotr Synowiec(via GitHub Actions)"
+          git config user.email "psynowiec@duck.com"
+
+      - name: Fetch all branches
+        run: git fetch origin
+
+      - name: Checkout dev branch
+        run: git checkout dev
+
+      - name: Reset dev to build
+        run: git reset --hard origin/build
+
+      - name: Reorganize files
+        run: |
+          mkdir -p custom_components/mmpk
+          mv sensor.py custom_components/mmpk/
+          mv __init__.py custom_components/mmpk/
+          mv manifest.json custom_components/mmpk/
+          rm -f sensor.py.*
+          rm -f README_temp.md
+
+      - name: Commit and force push changes
+        run: |
+          git add -A
+          git commit -m "Force sync and reorganize from build branch" || echo "No changes to commit"
+          git push origin dev --force

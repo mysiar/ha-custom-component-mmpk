@@ -1,4 +1,4 @@
 # Home Assistant custom component mMPK
 
-![Logo](logo.png)
+<img src="logo.png" alt="Logo" width="200"/>
 MPK Kraków public transport timetable

@@ -43,4 +43,5 @@ jobs:
         run: |
           git add -A
           git commit -m "Force sync and reorganize from build branch" || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}
           git push origin dev --force

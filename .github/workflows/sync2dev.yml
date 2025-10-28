@@ -38,6 +38,8 @@ jobs:
           rm -f README_temp.md
 
       - name: Commit and force push changes
+        env:
+          TOKEN: ${{ secrets.GH_PAT }}
         run: |
           git add -A
           git commit -m "Force sync and reorganize from build branch" || echo "No changes to commit"

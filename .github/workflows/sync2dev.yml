@@ -38,10 +38,8 @@ jobs:
           rm -f README_temp.md
 
       - name: Commit and force push changes
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git add -A
           git commit -m "Force sync and reorganize from build branch" || echo "No changes to commit"
-          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
           git push origin dev --force

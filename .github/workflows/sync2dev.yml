@@ -37,7 +37,7 @@ jobs:
           mv manifest.json custom_components/mmpk/
           rm -f sensor.py.*
           rm -f README_temp.md
-          rm -f stopscrap.py
+          rm -f stopscrape.py
 
       - name: Commit and force push changes
         run: |

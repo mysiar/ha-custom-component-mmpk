@@ -5,7 +5,7 @@
   "issue_tracker": "https://github.com/mysiar/ha-custom-component-mmpk/issues",
   "codeowners": ["@mysiar"],
   "requirements": ["requests", "urllib3"],
-  "version": "0.0.1",
+  "version": "1.0.0",
   "iot_class": "cloud_polling",
   "logo": "logo.png"
 }

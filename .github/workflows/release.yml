@@ -16,15 +16,13 @@ jobs:
 
       - name: Zip mmpk directory
         run: |
-          cd /home/runner/work/ha-custom-component-mmpk/ha-custom-component-mmpk/custom_components/mmpk
+          cd custom_components/mmpk
           zip -r mmpk.zip ./
           mv mmpk.zip ${{ github.workspace }}
 
-      - name: Upload zip to tag (as release asset)
-        uses: svenstaro/upload-release-action@v1-release
+      - name: Create GitHub release and upload asset
+        uses: softprops/action-gh-release@v1
         with:
-          repo_token: ${{ secrets.GH_PAT }}
-          file: ${{ github.workspace }}/mmpk.zip
-          asset_name: mmpk.zip
-          tag: ${{ github.ref_name }}
-          overwrite: true
+          files: mmpk.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}

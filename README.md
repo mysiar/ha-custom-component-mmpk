@@ -17,8 +17,8 @@ sensor:
 ```
 
 * A sensor configured with id: `1` will retrieve data for all available buses and trams at the specified stop.
-* A sensor configured with id: `2` will retrieve data exclusively for line 126 at the specified stop.
-
+* A sensor configured with id: `2` will retrieve data exclusively for line `126` at the specified stop.
+* `description` is optional
 
 ## Stop list
 

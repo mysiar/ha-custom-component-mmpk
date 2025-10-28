@@ -17,8 +17,10 @@ jobs:
       - name: Zip mmpk directory
         run: |
           pwd
-          cd /home/runner/work/ha-custom-component-mmpk/ha-custom-component-mmpk/custom_components/mmpk
+          cd /home/runner/work/ha-custom-component-mmpk/ha-custom-component-mmpk/custom_components/mmpk          
           zip -r mmpk.zip ./
+          ls -la .
+          ls -la ../
 
       - name: Upload zip to tag (as release asset)
         uses: svenstaro/upload-release-action@v1-release

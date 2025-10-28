@@ -26,5 +26,5 @@ jobs:
           repo_token: ${{ secrets.GH_PAT }}
           file: ${{ github.workspace }}/mmpk.zip
           asset_name: mmpk.zip
-          tag: ${{ github.ref }}
+          tag: ${{ github.ref_name }}
           overwrite: true

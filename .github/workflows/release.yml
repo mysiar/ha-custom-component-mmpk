@@ -16,7 +16,7 @@ jobs:
 
       - name: Zip mmpk directory
         run: |
-          cd custom_components/mmpk
+          cd /home/runner/work/ha-custom-component-mmpk/ha-custom-component-mmpk/custom_components/mmpk
           zip -r mmpk.zip ./
           mv mmpk.zip ${{ github.workspace }}
 

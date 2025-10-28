@@ -22,7 +22,7 @@ sensor:
 
 ## Stop list
 
-[CSV](MPK_stops.csv)
+[CSV](doc/MPK_stops.csv)
 
 ## Instalation
 ### Manual
@@ -40,3 +40,46 @@ wget https://github.com/mysiar/ha-custom-component-mmpk/releases/latest/download
 unzip mmpk.zip
 rm mmpk.zip
 ```
+
+## Display data 
+
+* Markdown card
+```
+{% set sensor = 'sensor.mpk_stop_1' %}
+{% set state = states(sensor) %}
+{% set disabled = state_attr(sensor, 'entity_disabled') %}
+{% set available = state not in ['unknown', 'unavailable', none] %}
+
+{% if disabled or not available %}
+_Sensor {{ sensor }} jest niedostępny lub wyłączony._
+{% else %}
+  {% set stop = state_attr(sensor, 'stop_name') %}
+  {% set updated = state_attr(sensor, 'last_update') %}
+  {% set departures = state_attr(sensor, 'departures_by_line') %}
+  {% set next_departure = state if state != "unknown" else "Brak odjazdów" %}
+
+**Przystanek: {{ stop if stop else "Nieznany" }}{% if updated %} [{{ updated[11:19] }}]{% endif %}**  
+Następny odjazd: {{ next_departure }}  
+{% if departures %}
+  {% for line, variants in departures.items() -%}
+    {% for variant in variants -%}
+**{{ line }} → {{ variant.direction }}**  
+{% if variant.departures -%}
+{{ variant.departures | join(', ') }}
+{% endif -%}
+    {% endfor -%}
+  {% endfor -%}
+{% else -%}
+Brak danych o odjazdach
+{% endif -%}
+{% endif %}
+
+```
+
+**Sensor 1 card**
+
+![Sensor 1 card](doc/sensor_1_card.png)
+
+**Sensor 2 card**
+
+![Sensor 2 card](doc/sensor_2_card.png)
